@@ -39,8 +39,7 @@ class _StartScreenState extends State<StartScreen> {
         .registergoogleUser( _scaffoldKey)
         .then((response) {
       if (response is Success<UserCredential>) {
-        FutureBuilder<AppUser>(
-            future: userProvider.user,
+        // test implement redirection
         if (snapshot.hasData) {
           Navigator.of(context).pushNamedAndRemoveUntil(
               TopNavigationScreen.id, (route) => false);
