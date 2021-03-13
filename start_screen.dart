@@ -37,23 +37,22 @@ class _StartScreenState extends State<StartScreen> {
   void registergoogleUser() async {
     await _userProvider
         .registergoogleUser( _scaffoldKey)
-        .then((response) {
+        .then((response) async {
       if (response is Success<UserCredential>) {
-        //test redirection
-        Future<AppUser> getUser(String userId) {
+        Future<DocumentSnapshot> getUser(String userId) {
           final FirebaseFirestore instance = FirebaseFirestore.instance;
-          _user = AppUser.fromSnapshot(await _databaseSource.getUser(id));
-          return _user;
+          print (instance.collection('users').doc(userId).get());
+          instance.collection('users').doc(userId).get();
         }
-        print (getUser); //for test
+        print (getUser);
         if (getUser != null) {
           Navigator.of(context).pushNamedAndRemoveUntil(
               TopNavigationScreen.id, (route) => false);
         } else {
           Navigator.pop(context);
           Navigator.pushNamed(context, RegisterScreen.id);
-        };
-        })});
+        }
+        }});
   }
 
   @override
