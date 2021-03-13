@@ -39,8 +39,14 @@ class _StartScreenState extends State<StartScreen> {
         .registergoogleUser( _scaffoldKey)
         .then((response) {
       if (response is Success<UserCredential>) {
-        // test implement redirection
-        if (snapshot.hasData) {
+        //test redirection
+        Future<AppUser> getUser(String userId) {
+          final FirebaseFirestore instance = FirebaseFirestore.instance;
+          _user = AppUser.fromSnapshot(await _databaseSource.getUser(id));
+          return _user;
+        }
+        print (getUser); //for test
+        if (getUser != null) {
           Navigator.of(context).pushNamedAndRemoveUntil(
               TopNavigationScreen.id, (route) => false);
         } else {
